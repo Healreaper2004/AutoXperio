@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Service Booking Portal | AutoXperio</title>
+  <link rel="stylesheet" href="serviceBookingPortal.css">
+  <style>
+    #toast {
+      visibility: hidden;
+      min-width: 250px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 12px;
+      position: fixed;
+      z-index: 9999;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      font-size: 14px;
+    }
+    #toast.show {
+      visibility: visible;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+    @keyframes fadein {
+      from { bottom: 0; opacity: 0; }
+      to { bottom: 30px; opacity: 1; }
+    }
+    @keyframes fadeout {
+      from { bottom: 30px; opacity: 1; }
+      to { bottom: 0; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo" onclick="location.href='dashboard.html'" style="cursor: pointer;">
+        <span class="car-icon" style="font-size: 28px;">&#128663;</span>
+        <span class="brand" style="font-size: 22px; font-weight: 700; margin-left: 6px;">AutoXperio</span>
+    </div>
+    <div class="user-info">
+      <span class="user-avatar">&#128100;</span>
+      <div>
+        <div class="user-name" id="usernameDisplay">Loading...</div>
+        <div class="user-role">Customer</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="top-nav">
+    <ul>
+      <li><a href="serviceBookingPortal.html" class="active">Bookings</a></li>
+      <li><a href="billing.html">Billing</a></li>
+      <li><a href="#" id="logoutLink">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <h2>Service Booking Portal</h2>
+    <p class="subtitle">Book your vehicle service or view existing bookings</p>
+    <div class="portal-grid">
+      <!-- Booking Form -->
+      <section class="booking-form">
+        <h3>New Service Booking</h3>
+        <form id="booking-form">
+          <label for="vehicleNumber">Vehicle Number / VIN</label>
+          <input type="text" id="vehicleNumber" required placeholder="Enter vehicle number or VIN">
+
+          <label for="serviceType">Service Type</label>
+          <select id="serviceType" required>
+            <option value="">Select service type</option>
+            <option>Oil Change</option>
+            <option>Brake Service</option>
+            <option>Engine Repair</option>
+            <option>General Inspection</option>
+          </select>
+
+          <div class="form-row">
+            <div>
+              <label for="preferredDate">Preferred Date</label>
+              <input type="date" id="preferredDate" required>
+            </div>
+            <div>
+              <label for="preferredTime">Preferred Time</label>
+              <select id="preferredTime" required>
+                <option value="">Select time</option>
+                <option>09:00 AM</option>
+                <option>11:00 AM</option>
+                <option>01:00 PM</option>
+                <option>03:00 PM</option>
+                <option>05:00 PM</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="issueDescription">Description of Issue</label>
+          <textarea id="issueDescription" rows="3" placeholder="Describe the issue or service needed..."></textarea>
+
+          <button type="submit" class="book-btn">Book Service</button>
+        </form>
+      </section>
+
+      <!-- Quick Stats -->
+      <aside class="quick-stats">
+        <h3>Quick Stats</h3>
+        <div class="stat-card">
+            <div class="stat-title">Total Bookings</div>
+            <div class="stat-value" id="totalBookingsStat">0</div>
+            <div class="stat-sub">This year</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-title">Pending</div>
+            <div class="stat-value" id="pendingBookingsStat">0</div>
+            <div class="stat-sub">Active bookings</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-title">Completed</div>
+            <div class="stat-value" id="completedBookingsStat">0</div>
+            <div class="stat-sub">This year</div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Bookings Table -->
+    <section class="bookings-table">
+      <h3>Your Bookings</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Booking ID</th>
+            <th>Vehicle</th>
+            <th>Service Type</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th class="owner-only">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bookingsTableBody">
+          <!-- Will be loaded via JavaScript -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <div id="statusModal" style="display:none; position:fixed; top:30%; left:35%; background:#fff; border-radius:8px; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.2); z-index:1000;">
+    <h3>Update Booking Status</h3>
+    <select id="statusSelect">
+      <option value="Scheduled">Scheduled</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+      <option value="Cancelled">Cancelled</option>
+    </select>
+    <br><br>
+    <button onclick="updateStatus()">Update</button>
+    <button onclick="closeStatusModal()">Cancel</button>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const token = localStorage.getItem("token");
+      const role = localStorage.getItem("role");
+
+      if (!token || !role) return window.location.href = "homepage.html";
+
+      // 👤 Role-based redirect
+      if (role === "customer" && window.location.pathname.includes("dashboard")) {
+        return window.location.href = "serviceBookingPortal.html";
+      }
+
+      // 👤 User info fetch
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/me", {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        const data = await res.json();
+        document.getElementById("usernameDisplay").textContent = data.username;
+        document.querySelector(".user-role").textContent = role.charAt(0).toUpperCase() + role.slice(1);
+      } catch (err) {
+        console.error("Failed to fetch user info");
+      }
+
+      // ✅ Logout only on logout link
+      const logoutLink = document.getElementById("logoutLink");
+      if (logoutLink) {
+        logoutLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.clear();
+          showToast("Logged out successfully");
+          setTimeout(() => {
+            window.location.href = "homepage.html";
+          }, 1500);
+        });
+      }
+
+      if (role === "customer") {
+        document.querySelectorAll(".owner-only").forEach(el => el.style.display = "none");
+      }
+    });
+
+    // Toast Function
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.className = "show";
+      setTimeout(() => toast.className = toast.className.replace("show", ""), 3000);
+    }
+  </script>
+
+  <script src="js/booking.js"></script>
+
+  <footer>
+    <div class="footer-bar">
+      <span class="footer-logo">&#128663;</span>
+      <span>© 2025 AutoXperio. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

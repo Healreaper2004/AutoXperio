@@ -1,0 +1,320 @@
+body {
+    background: #f7f8fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.car-icon {
+    font-size: 1.7rem;
+    color: #1a2236;
+}
+
+.brand {
+    color: #1a2236;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.user-avatar {
+    font-size: 2rem;
+    background: #1a2236;
+    color: #fff;
+    border-radius: 50%;
+    padding: 0.4rem;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.user-role {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.main-content {
+    max-width: 1100px;
+    margin: 2.5rem auto 0 auto;
+    padding: 0 1.5rem 2rem 1.5rem;
+}
+
+h2 {
+    margin: 0 0 0.2rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: #6b7280;
+    margin-bottom: 2rem;
+}
+
+.portal-grid {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.booking-form {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 1.5rem 2rem;
+    flex: 2;
+    min-width: 320px;
+}
+
+.booking-form h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: #1a2236;
+}
+
+.booking-form form label {
+    display: block;
+    margin: 1rem 0 0.3rem 0;
+    font-size: 0.97rem;
+    color: #222;
+}
+
+.booking-form input[type="text"],
+.booking-form input[type="date"],
+.booking-form select,
+.booking-form textarea {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    background: #f9fafb;
+    transition: border 0.2s;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+    border: 1.5px solid #1a2236;
+    outline: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row > div {
+    flex: 1;
+}
+
+.booking-form textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.book-btn {
+    width: 100%;
+    padding: 0.8rem 0;
+    background: #1a2236;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.7rem;
+    transition: background 0.2s;
+}
+
+.book-btn:hover {
+    background: #111827;
+}
+
+.quick-stats {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 1.5rem 1.2rem;
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: stretch;
+}
+
+.quick-stats h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    color: #1a2236;
+}
+
+.stat-card {
+    background: #f7f8fa;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.stat-title {
+    font-size: 0.98rem;
+    color: #6b7280;
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a2236;
+}
+
+.stat-sub {
+    font-size: 0.92rem;
+    color: #6b7280;
+}
+
+.bookings-table {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 1.5rem 2rem;
+}
+
+.bookings-table h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: #1a2236;
+}
+
+.bookings-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.bookings-table th, .bookings-table td {
+    padding: 0.8rem 0.7rem;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.bookings-table th {
+    background: #f7f8fa;
+    color: #1a2236;
+    font-weight: 600;
+    border-bottom: 1.5px solid #e5e7eb;
+}
+
+.bookings-table tr:not(:last-child) {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.status {
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.status.scheduled {
+    background: #fef9c3;
+    color: #b45309;
+}
+
+.status.in-progress {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status.completed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.bookings-table a {
+    color: #1a2236;
+    text-decoration: none;
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.bookings-table a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #e5e7eb;
+    padding: 0.7rem 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.footer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    font-size: 0.97rem;
+    color: #6b7280;
+}
+
+.footer-logo {
+    font-size: 1.2rem;
+    color: #1a2236;
+}
+
+.top-nav {
+    background-color: #f4f4f4;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+}
+
+.top-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+.top-nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.top-nav ul li a.active,
+.top-nav ul li a:hover {
+    background-color: #007bff;
+    color: white;
+}

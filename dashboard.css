@@ -1,0 +1,246 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f7f8fa;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background: #fff;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0 0 0;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.car-icon {
+    font-size: 1.7rem;
+    color: #1a2236;
+}
+
+.brand {
+    color: #1a2236;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav ul li {
+    padding: 0.9rem 1.5rem;
+    color: #222;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    border-left: 3px solid transparent;
+    transition: background 0.2s, border 0.2s;
+}
+
+.sidebar nav ul li.active, .sidebar nav ul li:hover {
+    background: #f1f3f7;
+    border-left: 3px solid #1a2236;
+    color: #1a2236;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 2rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.user-avatar {
+    font-size: 2rem;
+    background: #1a2236;
+    color: #fff;
+    border-radius: 50%;
+    padding: 0.4rem;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.user-role {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.dashboard {
+    padding: 2rem 2.5rem;
+}
+
+.dashboard h2 {
+    margin: 0 0 0.2rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.welcome {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+.summary-cards {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 1.2rem 1.5rem;
+    flex: 1;
+    min-width: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card-title {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.card-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a2236;
+}
+
+.card-sub {
+    font-size: 0.95rem;
+    color: #22c55e;
+    margin-top: 0.2rem;
+}
+
+.card:nth-child(3) .card-sub {
+    color: #ef4444;
+}
+
+.charts-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.chart-box {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    flex: 1;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+    color: #1a2236;
+}
+
+.chart-placeholder {
+    background: #f7f8fa;
+    border: 1.5px dashed #d1d5db;
+    border-radius: 8px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-size: 1rem;
+}
+
+.export-btn {
+    background: #1a2236;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.4rem 1rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.recent-activity {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 1.2rem 1.5rem;
+}
+
+.recent-activity h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    color: #1a2236;
+}
+
+.recent-activity ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recent-activity li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 0.7rem;
+    font-size: 1rem;
+    color: #222;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #1a2236;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.time {
+    margin-left: auto;
+    color: #6b7280;
+    font-size: 0.92rem;
+}
