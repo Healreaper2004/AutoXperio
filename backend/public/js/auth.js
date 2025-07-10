@@ -53,7 +53,7 @@ if (loginForm) {
       const res = await fetch('https://autoxperio.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, role })
+        body: JSON.stringify({ username, password, role })
       });
 
       const data = await res.json();
