@@ -39,7 +39,7 @@ if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const username = document.getElementById('email').value;
+    const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const roleBtn = document.querySelector('.role-btn.active');
     const role = roleBtn ? roleBtn.textContent.toLowerCase() : '';
@@ -53,7 +53,7 @@ if (loginForm) {
       const res = await fetch('https://autoxperio.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password, role })
+        body: JSON.stringify({ email, password, role })
       });
 
       const data = await res.json();

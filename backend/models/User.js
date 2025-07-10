@@ -1,10 +1,9 @@
-// backend/models/User.js
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
-  username: String,
-  password: String,
-  role: String, // customer or owner
+const UserSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ["owner", "customer"], required: true }
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", UserSchema);

@@ -8,10 +8,10 @@ const { verifyToken } = require("../middleware/authMiddleware");
 
 // LOGIN route
 router.post("/login", async (req, res) => {
-  const { username, password, role } = req.body;
+  const { email, password, role } = req.body;
 
   try {
-    const user = await User.findOne({ username, role });
+    const user = await User.findOne({ email, role });
     if (!user) return res.status(400).json({ message: "User not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -21,7 +21,7 @@ router.post("/login", async (req, res) => {
       expiresIn: "2h"
     });
 
-    res.json({ token, role: user.role, username: user.username });
+    res.json({ token, role: user.role, email: user.email });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
@@ -29,16 +29,16 @@ router.post("/login", async (req, res) => {
 
 // REGISTER route
 router.post("/register", async (req, res) => {
-  const { username, password, role } = req.body;
+  const { email, password, role } = req.body;
 
   try {
-    const existingUser = await User.findOne({ username, role });
+    const existingUser = await User.findOne({ email, role });
     if (existingUser) return res.status(400).json({ message: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      username,
+      email,
       password: hashedPassword,
       role
     });
@@ -58,7 +58,7 @@ router.get("/me", verifyToken, async (req, res) => {
 
     res.json({
       id: user._id,
-      username: user.username,
+      email: user.email,
       role: user.role
     });
   } catch (err) {
