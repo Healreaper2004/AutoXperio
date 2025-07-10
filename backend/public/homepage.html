@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoExperio Login</title>
+    <link rel="stylesheet" href="homepage.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <div class="logo">
+                <span class="car-icon">&#128663;</span>
+            </div>
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Sign in to your AutoExperio account</p>
+            <form id="loginForm">
+                <label for="email">Email or Username</label>
+                <input type="text" id="email" placeholder="Enter your email or username" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+
+                <label>Select Your Role</label>
+                <div class="role-select">
+                    <button type="button" class="role-btn active">Customer</button>
+                    <button type="button" class="role-btn">Owner</button>
+                </div>
+
+                <div class="options">
+                    <label><input type="checkbox"> Remember me</label>
+                    <a href="#" class="forgot">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="sign-in-btn">Sign In</button>
+            </form>
+            <div class="footer-text">
+                Don’t have an account? <a href="#">Contact Administrator</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-bar">
+            <span class="footer-logo">&#128663;</span>
+            <span>AutoExperio - Professional Auto Service Management</span>
+            <span class="footer-links">
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="#">Support</a>
+            </span>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+</body>
+</html> 

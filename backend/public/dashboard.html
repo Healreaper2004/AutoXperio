@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AutoXperio Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #333;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 4px;
+      display: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo" onclick="location.href='dashboard.html'" style="cursor: pointer;">
+        <span class="car-icon" style="font-size: 28px;">&#128663;</span>
+        <span class="brand" style="font-size: 22px; font-weight: 700; margin-left: 6px;">AutoXperio</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="dashboard.html"><span>&#10003;</span> Dashboard</a></li>
+          <li><a href="serviceBookingPortal.html"><span>&#128197;</span> Bookings</a></li>
+          <li><a href="inventory.html"><span>&#128230;</span> Inventory</a></li>
+          <li><a href="billing.html"><span>&#128179;</span> Billing</a></li>
+          <li><a href="#" id="logoutLink"><span>&#128682;</span> Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="top-bar">
+        <div></div>
+        <div class="user-info">
+          <span class="user-avatar">&#128100;</span>
+          <div>
+            <div class="user-name" id="usernameDisplay">Loading...</div>
+            <div class="user-role" id="userRoleDisplay">Owner</div>
+          </div>
+        </div>
+      </header>
+
+      <section class="dashboard">
+        <h2>Dashboard</h2>
+        <p class="welcome">Welcome back! Here's what's happening at your shop.</p>
+
+        <div class="summary-cards" id="summaryCards">
+          <!-- Dynamic summary cards -->
+        </div>
+
+        <div class="charts-row">
+          <div class="chart-box">
+            <div class="chart-header">
+              <span>Service Frequency</span>
+              <select id="timeRangeSelect">
+                <option>Last 7 days</option>
+                <option>Last 30 days</option>
+              </select>
+            </div>
+            <div class="chart-placeholder">
+              <canvas id="serviceFrequencyChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-box">
+            <div class="chart-header">
+              <span>Part Usage</span>
+              <button class="export-btn">Export</button>
+            </div>
+            <div class="chart-placeholder">
+              <canvas id="partUsageChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="recent-activity">
+          <h3>Recent Activity</h3>
+          <ul id="activityList">
+            <!-- Dynamic activity list -->
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.style.display = "block";
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 3000);
+    }
+
+    async function loadUserInfo() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return window.location.href = "homepage.html";
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/me", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          document.getElementById("usernameDisplay").textContent = data.username;
+          document.getElementById("userRoleDisplay").textContent = data.role.charAt(0).toUpperCase() + data.role.slice(1);
+
+          if (data.role !== "owner") {
+            showToast("Unauthorized: Customers cannot access Dashboard");
+            setTimeout(() => (window.location.href = "serviceBookingPortal.html"), 2000);
+          }
+        } else {
+          window.location.href = "homepage.html";
+        }
+      } catch (err) {
+        console.error("Error fetching user info:", err);
+        window.location.href = "homepage.html";
+      }
+    }
+
+    async function loadDashboardStats() {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await fetch("http://localhost:5000/api/dashboard/stats", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        document.getElementById("summaryCards").innerHTML = `
+          <div class="card"><div class="card-title">Total Services This Month</div><div class="card-value">${data.services}</div><div class="card-sub">Live</div></div>
+          <div class="card"><div class="card-title">Revenue This Month</div><div class="card-value">$${data.revenue.toLocaleString()}</div><div class="card-sub">Live</div></div>
+          <div class="card"><div class="card-title">Available Inventory</div><div class="card-value">${data.inventory}</div><div class="card-sub">Live</div></div>
+          <div class="card"><div class="card-title">Upcoming Bookings</div><div class="card-value">${data.bookings}</div><div class="card-sub">Today's: ${data.todayAppointments} appointments</div></div>
+        `;
+      } catch (err) {
+        console.error("Error loading dashboard stats:", err);
+      }
+    }
+
+    async function loadRecentActivity() {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await fetch("http://localhost:5000/api/dashboard/activity", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const list = document.getElementById("activityList");
+        list.innerHTML = "";
+        data.forEach(a => {
+          list.innerHTML += `<li><span class="dot"></span> ${a.message} <span class="time">${a.timeAgo}</span></li>`;
+        });
+      } catch (err) {
+        console.error("Error loading activity:", err);
+      }
+    }
+
+    async function loadCharts() {
+      const token = localStorage.getItem("token");
+
+      const freqRes = await fetch("http://localhost:5000/api/dashboard/service-frequency", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const freqData = await freqRes.json();
+      const barCtx = document.getElementById("serviceFrequencyChart").getContext("2d");
+      new Chart(barCtx, {
+        type: "bar",
+        data: {
+          labels: freqData.map(d => d.day),
+          datasets: [{
+            label: "Services",
+            data: freqData.map(d => d.count),
+            backgroundColor: "#4e73df"
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+
+      const usageRes = await fetch("http://localhost:5000/api/dashboard/part-usage", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const usageData = await usageRes.json();
+      const pieCtx = document.getElementById("partUsageChart").getContext("2d");
+      new Chart(pieCtx, {
+        type: "pie",
+        data: {
+          labels: usageData.map(d => d.part),
+          datasets: [{
+            data: usageData.map(d => d.quantity),
+            backgroundColor: [
+              "#4e73df", "#1cc88a", "#36b9cc", "#f6c23e", "#e74a3b", "#858796"
+            ]
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadUserInfo();
+      loadDashboardStats();
+      loadRecentActivity();
+      loadCharts();
+
+      const logoutBtn = document.getElementById("logoutLink");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.clear();
+          window.location.href = "logout.html";
+        });
+      }
+    });
+  </script>
+</body>
+</html>

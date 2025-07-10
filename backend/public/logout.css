@@ -1,0 +1,63 @@
+body {
+    background: #f7f8fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.logout-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logout-box {
+    background: #fff;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    width: 350px;
+    text-align: center;
+}
+
+.car-icon {
+    font-size: 2.5rem;
+    background: #1a2236;
+    color: #fff;
+    border-radius: 50%;
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+h2 {
+    margin: 0.5rem 0 0.2rem 0;
+    font-weight: 600;
+    color: #1a2236;
+}
+
+.subtitle {
+    color: #6b7280;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.login-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.8rem 0;
+    background: #1a2236;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.login-btn:hover {
+    background: #111827;
+}

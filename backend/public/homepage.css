@@ -1,0 +1,170 @@
+body {
+    background: #f7f8fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background: #fff;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    width: 350px;
+    text-align: center;
+}
+
+.logo .car-icon {
+    font-size: 2.5rem;
+    background: #1a2236;
+    color: #fff;
+    border-radius: 50%;
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+h2 {
+    margin: 0.5rem 0 0.2rem 0;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+form {
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin: 1rem 0 0.3rem 0;
+    font-size: 0.97rem;
+    color: #222;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    background: #f9fafb;
+    transition: border 0.2s;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    border: 1.5px solid #1a2236;
+    outline: none;
+}
+
+.role-select {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.role-btn {
+    flex: 1;
+    padding: 0.6rem 0;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s, border 0.2s;
+}
+
+.role-btn.active, .role-btn:hover {
+    background: #1a2236;
+    color: #fff;
+    border: 1.5px solid #1a2236;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+}
+
+.options .forgot {
+    color: #1a2236;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.sign-in-btn {
+    width: 100%;
+    padding: 0.8rem 0;
+    background: #1a2236;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+}
+
+.sign-in-btn:hover {
+    background: #111827;
+}
+
+.footer-text {
+    margin-top: 1.2rem;
+    font-size: 0.95rem;
+    color: #6b7280;
+}
+
+.footer-text a {
+    color: #1a2236;
+    text-decoration: underline;
+}
+
+footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    border-top: 1px solid #e5e7eb;
+    padding: 0.7rem 0;
+}
+
+.footer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    font-size: 0.97rem;
+    color: #6b7280;
+}
+
+.footer-logo {
+    font-size: 1.2rem;
+    color: #1a2236;
+}
+
+.footer-links a {
+    color: #1a2236;
+    text-decoration: none;
+    margin: 0 0.3rem;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
