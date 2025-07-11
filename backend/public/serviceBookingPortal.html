@@ -167,11 +167,9 @@
 
       if (!token || !role) return window.location.href = "homepage.html";
 
-      const BASE_URL = window.location.hostname.includes("localhost")
-        ? "http://localhost:5000"
-        : "https://autoxperio-backend.onrender.com";
+      const BASE_URL = "https://autoxperio.onrender.com"; // ✅ match your actual backend domain
 
-      // Redirect owner away from this page
+      // Prevent owners from accessing customer page
       if (role === "owner" && window.location.pathname.includes("serviceBookingPortal")) {
         return window.location.href = "dashboard.html";
       }
@@ -190,11 +188,12 @@
           return window.location.href = "homepage.html";
         }
       } catch (err) {
-        console.error("Failed to fetch user info");
+        console.error("Failed to fetch user info", err);
         localStorage.clear();
         return window.location.href = "homepage.html";
       }
 
+      // Handle logout
       const logoutLink = document.getElementById("logoutLink");
       if (logoutLink) {
         logoutLink.addEventListener("click", (e) => {
@@ -207,6 +206,7 @@
         });
       }
 
+      // Hide owner-only actions
       if (role === "customer") {
         document.querySelectorAll(".owner-only").forEach(el => el.style.display = "none");
       }
@@ -219,6 +219,7 @@
       setTimeout(() => toast.className = toast.className.replace("show", ""), 3000);
     }
   </script>
+
 
   <script src="js/booking.js"></script>
 
