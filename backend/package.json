@@ -5,6 +5,7 @@
   "main": "index.js",
 "scripts": {
   "seed": "node seeders/inventorySeeder.js",
+  "seed-users": "node seeders/seederUsers.js",
   "start": "node app.js"
 },
   "keywords": [],
