@@ -165,35 +165,44 @@
       const token = localStorage.getItem("token");
       const role = localStorage.getItem("role");
 
-      if (!token || !role) return window.location.href = "homepage.html";
+      // Redirect if not authenticated
+      if (!token || !role) {
+        return window.location.href = "homepage.html";
+      }
 
-      const BASE_URL = "https://autoxperio.onrender.com"; // ✅ match your actual backend domain
+      const BASE_URL = "https://autoxperio.onrender.com"; // ✅ Backend URL (NO localhost)
 
-      // Prevent owners from accessing customer page
+      // Owner trying to access customer page
       if (role === "owner" && window.location.pathname.includes("serviceBookingPortal")) {
         return window.location.href = "dashboard.html";
       }
 
       try {
         const res = await fetch(`${BASE_URL}/api/auth/me`, {
-          headers: { "Authorization": `Bearer ${token}` }
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` // ✅ Required token
+          }
         });
 
         const data = await res.json();
+
         if (res.ok) {
-          document.getElementById("usernameDisplay").textContent = data.username;
+          document.getElementById("usernameDisplay").textContent = data.username || "User";
           document.querySelector(".user-role").textContent = role.charAt(0).toUpperCase() + role.slice(1);
         } else {
+          console.warn("Auth failed:", data.message);
           localStorage.clear();
           return window.location.href = "homepage.html";
         }
       } catch (err) {
-        console.error("Failed to fetch user info", err);
+        console.error("Auth check failed:", err);
         localStorage.clear();
         return window.location.href = "homepage.html";
       }
 
-      // Handle logout
+      // 🔒 Logout handler
       const logoutLink = document.getElementById("logoutLink");
       if (logoutLink) {
         logoutLink.addEventListener("click", (e) => {
@@ -206,12 +215,13 @@
         });
       }
 
-      // Hide owner-only actions
+      // Hide owner-only controls for customer
       if (role === "customer") {
         document.querySelectorAll(".owner-only").forEach(el => el.style.display = "none");
       }
     });
 
+    // ✅ Toast function
     function showToast(message) {
       const toast = document.getElementById("toast");
       toast.textContent = message;
@@ -219,7 +229,6 @@
       setTimeout(() => toast.className = toast.className.replace("show", ""), 3000);
     }
   </script>
-
 
   <script src="js/booking.js"></script>
 
