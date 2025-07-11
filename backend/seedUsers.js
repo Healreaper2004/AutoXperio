@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const User = require("./models/User");
 
 // Connect to MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/autoxperio")
+mongoose.connect("mongodb+srv://dpsayush2004:QO4xoFm1ma1uB6uR@autoxperiocluster.4prqzeq.mongodb.net/autoxperio?retryWrites=true&w=majority")
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB error:", err));
 
