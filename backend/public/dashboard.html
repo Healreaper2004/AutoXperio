@@ -96,6 +96,10 @@
   <div id="toast"></div>
 
   <script>
+    const BASE_URL = window.location.hostname.includes("localhost")
+      ? "http://localhost:5000"
+      : "https://autoxperio-backend.onrender.com"; // Change to your actual backend URL
+
     function showToast(message) {
       const toast = document.getElementById("toast");
       toast.textContent = message;
@@ -112,7 +116,7 @@
       }
 
       try {
-        const res = await fetch("http://localhost:5000/api/auth/me", {
+        const res = await fetch(`${BASE_URL}/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -138,7 +142,7 @@
     async function loadDashboardStats() {
       const token = localStorage.getItem("token");
       try {
-        const res = await fetch("http://localhost:5000/api/dashboard/stats", {
+        const res = await fetch(`${BASE_URL}/api/dashboard/stats`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -156,7 +160,7 @@
     async function loadRecentActivity() {
       const token = localStorage.getItem("token");
       try {
-        const res = await fetch("http://localhost:5000/api/dashboard/activity", {
+        const res = await fetch(`${BASE_URL}/api/dashboard/activity`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -173,7 +177,7 @@
     async function loadCharts() {
       const token = localStorage.getItem("token");
 
-      const freqRes = await fetch("http://localhost:5000/api/dashboard/service-frequency", {
+      const freqRes = await fetch(`${BASE_URL}/api/dashboard/service-frequency`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const freqData = await freqRes.json();
@@ -196,7 +200,7 @@
         }
       });
 
-      const usageRes = await fetch("http://localhost:5000/api/dashboard/part-usage", {
+      const usageRes = await fetch(`${BASE_URL}/api/dashboard/part-usage`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const usageData = await usageRes.json();
