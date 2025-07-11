@@ -9,13 +9,13 @@ mongoose.connect("mongodb+srv://dpsayush2004:QO4xoFm1ma1uB6uR@autoxperiocluster.
 
 // User data (emails instead of username)
 const users = [
-  { email: "arsh@example.com", password: "arsh123", role: "customer" },
-  { email: "priyank@example.com", password: "priyank123", role: "customer" },
-  { email: "ayush@example.com", password: "ayush123", role: "customer" },
-  { email: "shubham@example.com", password: "shubham123", role: "customer" },
-  { email: "neel@example.com", password: "neel123", role: "customer" },
-  { email: "abhishek@example.com", password: "abhishek123", role: "customer" },
-  { email: "utkarsh@example.com", password: "utkarsh123", role: "customer" }
+  { email: "arsh@example.com", password: "Arsh@123#", role: "customer" },
+  { email: "priyank@example.com", password: "Priyank@123#", role: "customer" },
+  { email: "ayush@example.com", password: "Ayush@123#", role: "customer" },
+  { email: "shubham@example.com", password: "Shubham@123#", role: "customer" },
+  { email: "neel@example.com", password: "Neel@123#", role: "customer" },
+  { email: "abhishek@example.com", password: "Abhishek@123#", role: "customer" },
+  { email: "utkarsh@example.com", password: "Utkarsh@123#", role: "customer" }
 ];
 
 // Insert users
