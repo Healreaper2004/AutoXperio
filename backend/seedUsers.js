@@ -7,25 +7,24 @@ mongoose.connect("mongodb+srv://dpsayush2004:QO4xoFm1ma1uB6uR@autoxperiocluster.
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB error:", err));
 
-// User data (emails instead of username)
+// Updated users with secure emails & passwords
 const users = [
-  { email: "arsh@example.com", password: "Arsh@123#", role: "customer" },
-  { email: "priyank@example.com", password: "Priyank@123#", role: "customer" },
-  { email: "ayush@example.com", password: "Ayush@123#", role: "customer" },
-  { email: "shubham@example.com", password: "Shubham@123#", role: "customer" },
-  { email: "neel@example.com", password: "Neel@123#", role: "customer" },
-  { email: "abhishek@example.com", password: "Abhishek@123#", role: "customer" },
-  { email: "utkarsh@example.com", password: "Utkarsh@123#", role: "customer" }
+  { email: "arsh@autoxperio.com", password: "arsh_autoxperio123#", role: "customer" },
+  { email: "priyank@autoxperio.com", password: "priyank_autoxperio123#", role: "customer" },
+  { email: "ayush@autoxperio.com", password: "ayush_autoxperio123#", role: "customer" },
+  { email: "shubham@autoxperio.com", password: "shubham_autoxperio123#", role: "customer" },
+  { email: "neel@autoxperio.com", password: "neel_autoxperio123#", role: "customer" },
+  { email: "abhishek@autoxperio.com", password: "abhishek_autoxperio123#", role: "customer" },
+  { email: "utkarsh@autoxperio.com", password: "utkarsh_autoxperio123#", role: "customer" }
 ];
 
-// Insert users
+// Insert or update users
 async function insertUsers() {
   for (const user of users) {
     const hashedPassword = await bcrypt.hash(user.password, 10);
 
     const existing = await User.findOne({ email: user.email });
     if (existing) {
-      // 🔄 Update password if already exists
       existing.password = hashedPassword;
       existing.role = user.role;
       await existing.save();
@@ -45,5 +44,5 @@ async function insertUsers() {
   mongoose.disconnect();
 }
 
-
 insertUsers();
+
