@@ -98,7 +98,7 @@
   <script>
     const BASE_URL = window.location.hostname.includes("localhost")
       ? "http://localhost:5000"
-      : "https://autoxperio-backend.onrender.com"; // Change to your actual backend URL
+      : "https://autoxperio.onrender.com"; // Change to your actual backend URL
 
     function showToast(message) {
       const toast = document.getElementById("toast");
@@ -236,6 +236,17 @@
           window.location.href = "logout.html";
         });
       }
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const user = await checkAuth("owner"); // "customer" or null for any role
+      if (!user) return;
+
+      // continue loading data using user info
+      document.getElementById("usernameDisplay").textContent = user.username;
+      document.getElementById("userRoleDisplay").textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
     });
   </script>
 </body>

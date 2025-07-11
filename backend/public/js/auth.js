@@ -1,12 +1,7 @@
-// // 🔐 Redirect to login if not authenticated (except on homepage)
-// document.addEventListener("DOMContentLoaded", () => {
-//   const pathname = window.location.pathname;
-
-//   // Only redirect if not homepage and no token
-//   if (!localStorage.getItem('token') && !pathname.includes('homepage.html')) {
-//     window.location.href = 'homepage.html';
-//   }
-// });
+// ✅ Set correct BASE_URL
+const BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:5000"
+  : "https://autoxperio.onrender.com"; // 🔥 Updated to match your real backend
 
 // ✅ Toast system (inline notifications)
 function showToast(message, type = 'info') {
@@ -55,7 +50,7 @@ if (loginForm) {
     }
 
     try {
-      const res = await fetch('https://autoxperio.onrender.com/api/auth/login', {
+      const res = await fetch(`${BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, role })
