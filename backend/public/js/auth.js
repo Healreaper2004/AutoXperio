@@ -1,7 +1,12 @@
 // 🔐 Redirect to login if not authenticated (except on homepage)
-if (!localStorage.getItem('token') && !window.location.pathname.includes('homepage.html')) {
-  window.location.href = 'homepage.html';
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const pathname = window.location.pathname;
+
+  // Only redirect if not homepage and no token
+  if (!localStorage.getItem('token') && !pathname.includes('homepage.html')) {
+    window.location.href = 'homepage.html';
+  }
+});
 
 // ✅ Toast system (inline notifications)
 function showToast(message, type = 'info') {
