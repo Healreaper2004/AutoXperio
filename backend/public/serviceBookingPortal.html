@@ -159,6 +159,7 @@
 
   <div id="toast"></div>
 
+  <!-- ✅ Updated Script -->
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
       const token = localStorage.getItem("token");
@@ -166,24 +167,34 @@
 
       if (!token || !role) return window.location.href = "homepage.html";
 
-      // 👤 Role-based redirect
-      if (role === "customer" && window.location.pathname.includes("dashboard")) {
-        return window.location.href = "serviceBookingPortal.html";
+      const BASE_URL = window.location.hostname.includes("localhost")
+        ? "http://localhost:5000"
+        : "https://autoxperio-backend.onrender.com";
+
+      // Redirect owner away from this page
+      if (role === "owner" && window.location.pathname.includes("serviceBookingPortal")) {
+        return window.location.href = "dashboard.html";
       }
 
-      // 👤 User info fetch
       try {
-        const res = await fetch("http://localhost:5000/api/auth/me", {
+        const res = await fetch(`${BASE_URL}/api/auth/me`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
+
         const data = await res.json();
-        document.getElementById("usernameDisplay").textContent = data.username;
-        document.querySelector(".user-role").textContent = role.charAt(0).toUpperCase() + role.slice(1);
+        if (res.ok) {
+          document.getElementById("usernameDisplay").textContent = data.username;
+          document.querySelector(".user-role").textContent = role.charAt(0).toUpperCase() + role.slice(1);
+        } else {
+          localStorage.clear();
+          return window.location.href = "homepage.html";
+        }
       } catch (err) {
         console.error("Failed to fetch user info");
+        localStorage.clear();
+        return window.location.href = "homepage.html";
       }
 
-      // ✅ Logout only on logout link
       const logoutLink = document.getElementById("logoutLink");
       if (logoutLink) {
         logoutLink.addEventListener("click", (e) => {
@@ -201,7 +212,6 @@
       }
     });
 
-    // Toast Function
     function showToast(message) {
       const toast = document.getElementById("toast");
       toast.textContent = message;
