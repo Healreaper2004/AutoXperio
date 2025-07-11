@@ -1,42 +1,41 @@
-// backend/seedUsers.js
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const User = require("./models/User");
 
 // Connect to MongoDB
 mongoose.connect("mongodb://127.0.0.1:27017/autoxperio")
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error(err));
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.error("❌ MongoDB error:", err));
 
-// User data
+// User data (emails instead of username)
 const users = [
-  { username: "Arsh Anand", password: "arsh123", role: "customer" },
-  { username: "Priyank Agrawal", password: "priyank123", role: "customer" },
-  { username: "Ayush Biswas", password: "ayush123", role: "customer" },
-  { username: "Shubham Kumar", password: "shubham123", role: "customer" },
-  { username: "Neel Patel", password: "neel123", role: "customer" },
-  { username: "Abhishek Bapat", password: "abhishek123", role: "customer" },
-  { username: "Utkarsh Mathur", password: "utkarsh123", role: "customer" }
+  { email: "arsh@example.com", password: "arsh123", role: "customer" },
+  { email: "priyank@example.com", password: "priyank123", role: "customer" },
+  { email: "ayush@example.com", password: "ayush123", role: "customer" },
+  { email: "shubham@example.com", password: "shubham123", role: "customer" },
+  { email: "neel@example.com", password: "neel123", role: "customer" },
+  { email: "abhishek@example.com", password: "abhishek123", role: "customer" },
+  { email: "utkarsh@example.com", password: "utkarsh123", role: "customer" }
 ];
 
 // Insert users
 async function insertUsers() {
   for (const user of users) {
-    const existing = await User.findOne({ username: user.username });
+    const existing = await User.findOne({ email: user.email });
     if (existing) {
-      console.log(`User ${user.username} already exists.`);
+      console.log(`ℹ️ User ${user.email} already exists.`);
       continue;
     }
 
     const hashedPassword = await bcrypt.hash(user.password, 10);
     const newUser = new User({
-      username: user.username,
+      email: user.email,
       password: hashedPassword,
       role: user.role
     });
 
     await newUser.save();
-    console.log(`Inserted: ${user.username}`);
+    console.log(`✅ Inserted: ${user.email}`);
   }
 
   mongoose.disconnect();

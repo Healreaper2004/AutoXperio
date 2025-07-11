@@ -14,11 +14,11 @@ router.get("/stats", verifyToken, async (req, res) => {
     const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
     const todayStr = now.toISOString().split("T")[0];
 
-    const totalServices = await Booking.countDocuments({ date: { $gte: firstDay } });
+    const totalServices = await Booking.countDocuments({ preferredDate: { $gte: firstDay } });
 
     const revenueAgg = await Invoice.aggregate([
       { $match: { date: { $gte: firstDay } } },
-      { $group: { _id: null, total: { $sum: "$totalAmount" } } }
+      { $group: { _id: null, total: { $sum: "$total" } } } // Fixed from "$totalAmount"
     ]);
     const revenue = revenueAgg[0]?.total || 0;
 
@@ -27,10 +27,10 @@ router.get("/stats", verifyToken, async (req, res) => {
     ]);
     const inventoryCount = inventoryAgg[0]?.totalQty || 0;
 
-    const upcoming = await Booking.countDocuments({ date: { $gte: new Date() } });
+    const upcoming = await Booking.countDocuments({ preferredDate: { $gte: new Date() } });
 
     const todayAppointments = await Booking.countDocuments({
-      date: { $eq: todayStr }
+      preferredDate: { $eq: todayStr }
     });
 
     res.json({
