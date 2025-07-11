@@ -21,24 +21,29 @@ const users = [
 // Insert users
 async function insertUsers() {
   for (const user of users) {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+
     const existing = await User.findOne({ email: user.email });
     if (existing) {
-      console.log(`ℹ️ User ${user.email} already exists.`);
-      continue;
+      // 🔄 Update password if already exists
+      existing.password = hashedPassword;
+      existing.role = user.role;
+      await existing.save();
+      console.log(`🔄 Updated: ${user.email}`);
+    } else {
+      const newUser = new User({
+        email: user.email,
+        password: hashedPassword,
+        role: user.role
+      });
+
+      await newUser.save();
+      console.log(`✅ Inserted: ${user.email}`);
     }
-
-    const hashedPassword = await bcrypt.hash(user.password, 10);
-    const newUser = new User({
-      email: user.email,
-      password: hashedPassword,
-      role: user.role
-    });
-
-    await newUser.save();
-    console.log(`✅ Inserted: ${user.email}`);
   }
 
   mongoose.disconnect();
 }
+
 
 insertUsers();
