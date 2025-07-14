@@ -16,6 +16,7 @@ const users = [
   { username: "Abhishek Bapat", password: "abhishek123", role: "customer" },
   { username: "Utkarsh Mathur", password: "utkarsh123", role: "customer" },
   { username: "Healreaper", password: "ayush@2004", role: "owner" }, // 👈 Owner account
+  { username: "Guest", password: "Guest@123#", role: "owner" }, // 👈 Guest account
 ];
 
 const seedUsers = async () => {

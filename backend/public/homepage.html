@@ -32,6 +32,7 @@
                 </div>
 
                 <button type="submit" class="sign-in-btn">Sign In</button>
+                <button type="button" onclick="guestLogin()" class="sign-in-btn" style="margin-top: 10px; background-color: #f0f0f0; color: #000;">Guest Login</button>
             </form>
             <div class="footer-text">
                 Don’t have an account? <a href="#">Contact Administrator</a>
@@ -52,5 +53,45 @@
     </footer>
 
     <script src="js/auth.js"></script>
+
+    <script>
+        // Guest Login Function
+        function guestLogin() {
+            const guestUser = {
+                email: "guest@autoxperio.com",
+                password: "guest123",
+                role: "Owner"  // Or "Customer"
+            };
+
+            fetch("https://autoxperio.onrender.com/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(guestUser)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("role", guestUser.role);
+                    window.location.href = "dashboard.html";  // Or your landing page
+                } else {
+                    alert("Guest login failed.");
+                }
+            })
+            .catch(error => {
+                console.error("Guest Login Error:", error);
+            });
+        }
+
+        // Optional: Role Button Toggle (to support rest of auth.js functionality)
+        document.querySelectorAll('.role-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
 </body>
-</html> 
+</html>

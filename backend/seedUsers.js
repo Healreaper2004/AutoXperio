@@ -15,7 +15,8 @@ const users = [
   { email: "shubham@autoxperio.com", password: "shubham_autoxperio123#", role: "customer" },
   { email: "neel@autoxperio.com", password: "neel_autoxperio123#", role: "customer" },
   { email: "abhishek@autoxperio.com", password: "abhishek_autoxperio123#", role: "customer" },
-  { email: "utkarsh@autoxperio.com", password: "utkarsh_autoxperio123#", role: "customer" }
+  { email: "utkarsh@autoxperio.com", password: "utkarsh_autoxperio123#", role: "customer" },
+  { email: "guest@autoxperio.com", password: "guest123", role: "owner" }
 ];
 
 // Insert or update users
