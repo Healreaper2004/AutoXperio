@@ -55,12 +55,10 @@
     <script src="js/auth.js"></script>
 
     <script>
-        // Guest Login Function
         function guestLogin() {
             const guestUser = {
                 email: "guest@autoxperio.com",
-                password: "guest123",
-                role: "Owner"  // Or "Customer"
+                password: "guest_autoxperio123#"
             };
 
             fetch("https://autoxperio.onrender.com/api/auth/login", {
@@ -74,24 +72,17 @@
             .then(data => {
                 if (data.token) {
                     localStorage.setItem("token", data.token);
-                    localStorage.setItem("role", guestUser.role);
-                    window.location.href = "dashboard.html";  // Or your landing page
+                    localStorage.setItem("role", "owner"); // force role = owner
+                    window.location.href = "dashboard.html"; // or owner.html
                 } else {
-                    alert("Guest login failed.");
+                    alert("Guest login failed: " + (data.message || "Unknown error"));
                 }
             })
             .catch(error => {
                 console.error("Guest Login Error:", error);
+                alert("Guest login failed. Check console.");
             });
         }
-
-        // Optional: Role Button Toggle (to support rest of auth.js functionality)
-        document.querySelectorAll('.role-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
     </script>
 </body>
 </html>
