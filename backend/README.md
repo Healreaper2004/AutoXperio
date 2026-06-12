@@ -19,6 +19,44 @@ AutoXperio is a full-stack Garage Management System designed to streamline vehic
 - Inventory Management
 - Billing System
 
+# Demo Credentials
+
+The application includes two pre-configured accounts for evaluation and testing.
+
+## Owner Account (Admin Access)
+
+Email: [healreaper@example.com](mailto:healreaper@example.com)
+
+Password: 12345678
+
+Access:
+
+* Dashboard & Analytics
+* Inventory Management
+* Billing Management
+* Service Booking Management
+* Customer Management
+
+## Customer Account
+
+Email: [arsh@autoxperio.com](mailto:arsh@autoxperio.com)
+
+Password: arsh_autoxperio123#
+
+Access:
+
+* Service Booking
+* View Bills
+* Track Service Status
+* Customer Portal Features
+
+## Live Demo
+
+URL: https://autoxperio.onrender.com
+
+Note: These accounts are provided solely for project evaluation and demonstration purposes.
+
+
 ## Features
 
 ### Authentication & Authorization
