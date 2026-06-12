@@ -4,6 +4,21 @@
 
 AutoXperio is a full-stack Garage Management System designed to streamline vehicle service operations, inventory management, customer bookings, and billing processes. The application provides secure authentication, role-based access control, and real-time management capabilities for garage owners and customers.
 
+## Tech Stack:
+- Node.js
+- Express.js
+- MongoDB
+- JWT Authentication
+- JavaScript
+- HTML/CSS
+
+## Key Features:
+- Authentication & Authorization
+- Role-Based Access Control
+- Service Booking Management
+- Inventory Management
+- Billing System
+
 ## Features
 
 ### Authentication & Authorization
